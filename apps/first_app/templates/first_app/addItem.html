@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Item</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <style>
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-control {
+            display: block;
+            width: 30%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h3 class="my-0 mr-md-auto font-weight-heavy">Create a New Wish List Item</h3>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2" href="/dashboard">Home</a>
+            <a class="p-2" href="/logout">Logout</a>
+        </nav>
+    </div>
+    <div class="jumbotron jumbobox">
+
+    <form action="/addItem" method="post">
+        {% csrf_token %}
+        <h3  class="my-0 mr-md-auto font-weight-heavy">Item/Product<input class="form-control" type="text" name="title" placeholder="Destination"></h3><br>
+        <input class="btn btn-primary" type="submit" value="Add">
+    </form>
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+</div>
+
+
+</body>
+</html>

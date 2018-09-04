@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Wish List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <style>
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-control {
+            display: block;
+            width: 30%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h2 class="my-0 mr-md-auto font-weight-heavy">Hello, {{ user.first_name }}!</h2>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2" href="/addItemPage">Add Item</a>
+            <a class="p-2" href="/logout">Logout</a>
+        </nav>
+    </div>
+    <h4 class="h3 mb-3 font-weight-heavy">Your Wish List</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>  Item   </th>
+            <th>  Added by  </th>
+            <th>  Date Added  </th>
+            <th>  Action  </th>
+        </tr>
+        {% for favorite in favorite_items %}
+        <tr>
+            <td><a href="/showItemPage/{{favorite.id}}">{{ favorite.title }}</a></td>
+            <td>{{ favorite.item_added_by.first_name }}</td>
+            <td>{{ favorite.created_at }}</td>
+            <td>
+                
+
+                <a href="/cancelfavoriteItem/{{favorite.id}}">Remove from my Wishlist</a>
+            
+            </td>
+            <td>
+                {% if favorite.item_added_by.id == request.session.user_id %}
+                <a href="/delete/{{favorite.id}}">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <h4 class="h3 mb-3 font-weight-heavy">Other Users's Wish List</h4>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Item</th>
+            <th>Added by</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </tr>
+        {% for item in items %}
+        {% if item not in favorite_items %}
+        <tr>
+            <td><a href="/showItemPage/{{item.id}}">{{ item.title }}</a></td>
+            <td>{{ item.item_added_by.first_name }}</td>
+            <td>{{ item.created_at }}</td>
+            <td><a href="/favoriteItem/{{item.id}}">Add to my Wishlist</a></td>
+            
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    <hr>
+</div>
+</body>
+</html>
